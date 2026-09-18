@@ -18,6 +18,7 @@ Backend (fase 5): Cloudflare Workers + Hono + D1 + Drizzle.
 - Lógica de domínio nunca chama Date.now() direto
 - Nenhuma dependência nova sem eu aprovar
 - Commits sempre em inglês
+- Todo código (arquivos, pastas, variáveis, funções, tipos) em inglês. Produto em português.
 
 ## Fase atual
 Fase 0 — Fundação.
