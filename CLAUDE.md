@@ -17,6 +17,7 @@ Backend (fase 5): Cloudflare Workers + Hono + D1 + Drizzle.
 - Toda entidade: id UUID v7, updatedAt, deletedAt, dirty
 - Lógica de domínio nunca chama Date.now() direto
 - Nenhuma dependência nova sem eu aprovar
+- Commits sempre em inglês
 
 ## Fase atual
 Fase 0 — Fundação.
