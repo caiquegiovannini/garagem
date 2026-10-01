@@ -1,12 +1,13 @@
 import { z } from 'zod';
 import { VehicleIdSchema } from './vehicle';
+import { KmSchema } from './km';
 
 export const OdometerReadingIdSchema = z.uuid().brand<'OdometerReadingId'>();
 export const OdometerReadingSchema = z.object({
   id: OdometerReadingIdSchema,
   vehicleId: VehicleIdSchema,
   date: z.date(),
-  km: z.number().int().nonnegative(),
+  km: KmSchema,
 });
 
 type ReadingPoint = Pick<OdometerReading, 'date' | 'km'>;
