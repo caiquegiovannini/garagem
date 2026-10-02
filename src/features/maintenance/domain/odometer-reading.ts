@@ -10,7 +10,6 @@ export const OdometerReadingSchema = z.object({
   km: KmSchema,
 });
 
-type ReadingPoint = Pick<OdometerReading, 'date' | 'km'>;
 export function isKmConsistent(
   reading: ReadingPoint,
   existingReadings: ReadingPoint[],
@@ -26,5 +25,15 @@ export function isKmConsistent(
   });
 }
 
+export function getCurrentKm(readings: ReadingPoint[]): number | undefined {
+  if (!readings.length) return undefined;
+  const mostRecentReading = readings.reduce((mostRecent, reading) => {
+    if (reading.date > mostRecent.date) return reading;
+    return mostRecent;
+  });
+  return mostRecentReading.km;
+}
+
+type ReadingPoint = Pick<OdometerReading, 'date' | 'km'>;
 export type OdometerReadingId = z.infer<typeof OdometerReadingIdSchema>;
 export type OdometerReading = z.infer<typeof OdometerReadingSchema>;

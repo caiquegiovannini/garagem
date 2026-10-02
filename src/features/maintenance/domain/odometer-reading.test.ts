@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isKmConsistent } from './odometer-reading';
+import { getCurrentKm, isKmConsistent } from './odometer-reading';
 
 describe('isKmConsistent', () => {
   it('should return true when there are no existing readings', () => {
@@ -74,5 +74,24 @@ describe('isKmConsistent', () => {
     const result = isKmConsistent(march10, [march20]);
 
     expect(result).toBe(true);
+  });
+});
+
+describe('getCurrentKm', () => {
+  it('should return undefined when there are no readings', () => {
+    const currentKm = getCurrentKm([]);
+    expect(currentKm).toBeUndefined();
+  });
+  it('should return the km when there is one reading', () => {
+    const march10 = { date: new Date('2026-03-10T12:00:00Z'), km: 4000 };
+    const currentKm = getCurrentKm([march10]);
+    expect(currentKm).toBe(march10.km);
+  });
+  it('should return the km of the most recent reading when readings are out of order', () => {
+    const march10 = { date: new Date('2026-03-10T12:00:00Z'), km: 3000 };
+    const march20 = { date: new Date('2026-03-20T12:00:00Z'), km: 4000 };
+    const march30 = { date: new Date('2026-03-30T12:00:00Z'), km: 5000 };
+    const currentKm = getCurrentKm([march20, march30, march10]);
+    expect(currentKm).toBe(march30.km);
   });
 });
