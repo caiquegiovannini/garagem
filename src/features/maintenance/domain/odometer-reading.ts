@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { VehicleIdSchema } from './vehicle';
 import { KmSchema } from './km';
+import { getMostRecent } from './time';
 
 export const OdometerReadingIdSchema = z.uuid().brand<'OdometerReadingId'>();
 export const OdometerReadingSchema = z.object({
@@ -26,12 +27,7 @@ export function isKmConsistent(
 }
 
 export function getCurrentKm(readings: ReadingPoint[]): number | undefined {
-  if (!readings.length) return undefined;
-  const mostRecentReading = readings.reduce((mostRecent, reading) => {
-    if (reading.date > mostRecent.date) return reading;
-    return mostRecent;
-  });
-  return mostRecentReading.km;
+  return getMostRecent(readings)?.km;
 }
 
 type ReadingPoint = Pick<OdometerReading, 'date' | 'km'>;
