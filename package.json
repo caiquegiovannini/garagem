@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "final-check": "npm run format && npm run lint && tsc -b && npm run test"
   },
   "engines": {
     "node": "24"
