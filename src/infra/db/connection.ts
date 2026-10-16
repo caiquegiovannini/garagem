@@ -1,4 +1,5 @@
-import { STORES } from './stores';
+import type { Inspection } from '../../features/maintenance/domain/inspection';
+import { INDEXES, STORES } from './stores';
 
 export function openDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -9,7 +10,13 @@ export function openDb(): Promise<IDBDatabase> {
       db.createObjectStore(STORES.vehicle, { keyPath: 'id' });
       db.createObjectStore(STORES.odometerReading, { keyPath: 'id' });
       db.createObjectStore(STORES.maintenanceItem, { keyPath: 'id' });
-      db.createObjectStore(STORES.inspection, { keyPath: 'id' });
+      const inspectionStore = db.createObjectStore(STORES.inspection, {
+        keyPath: 'id',
+      });
+      inspectionStore.createIndex(
+        INDEXES.inspectionByMaintenanceItem,
+        'maintenanceItemId' satisfies keyof Inspection,
+      );
     };
 
     request.onsuccess = () => resolve(request.result); // IDBDatabase pronto para uso

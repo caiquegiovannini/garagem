@@ -4,3 +4,7 @@ export const STORES = {
   odometerReading: 'odometer-reading',
   inspection: 'inspection',
 } as const;
+
+export const INDEXES = {
+  inspectionByMaintenanceItem: 'by-maintenance-item',
+} as const;
