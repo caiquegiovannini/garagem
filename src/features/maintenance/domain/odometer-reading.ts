@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { VehicleIdSchema } from './vehicle';
 import { KmSchema } from './km';
 import { getMostRecent } from './time';
+import { SyncFieldsSchema } from './sync-fields';
 
 export const OdometerReadingIdSchema = z.uuid().brand<'OdometerReadingId'>();
 export const OdometerReadingSchema = z.object({
@@ -9,6 +10,7 @@ export const OdometerReadingSchema = z.object({
   vehicleId: VehicleIdSchema,
   date: z.date(),
   km: KmSchema,
+  ...SyncFieldsSchema.shape,
 });
 
 export function isKmConsistent(

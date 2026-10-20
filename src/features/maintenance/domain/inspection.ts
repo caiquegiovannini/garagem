@@ -4,6 +4,7 @@ import {
   MaintenanceItemTypeSchema,
 } from './maintenance-item';
 import { KmSchema } from './km';
+import { SyncFieldsSchema } from './sync-fields';
 
 export const InspectionIdSchema = z.uuid().brand<'InspectionId'>();
 
@@ -14,6 +15,7 @@ const InspectionBaseSchema = z.object({
   km: KmSchema,
   result: z.enum(['ok', 'intervened']),
   note: z.string().trim().nonempty().optional(),
+  ...SyncFieldsSchema.shape,
 });
 
 export const InspectionSchema = z.discriminatedUnion('type', [

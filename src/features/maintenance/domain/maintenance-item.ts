@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import { VehicleIdSchema } from './vehicle';
+import { generateId } from '../../../shared/id';
+import { SyncFieldsSchema } from './sync-fields';
 
 export const MaintenanceItemIdSchema = z.uuid().brand<'MaintenanceItemId'>();
 export const MaintenanceItemTypeSchema = z.enum(['numeric', 'boolean']);
@@ -18,6 +20,7 @@ export const MaintenanceItemSchema = z.object({
   name: z.string().trim().nonempty(),
   type: MaintenanceItemTypeSchema,
   interval: MaintenanceItemIntervalSchema,
+  ...SyncFieldsSchema.shape,
 });
 
 export function newMaintenanceItemId(): MaintenanceItemId {
