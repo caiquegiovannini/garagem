@@ -20,6 +20,10 @@ export const MaintenanceItemSchema = z.object({
   interval: MaintenanceItemIntervalSchema,
 });
 
+export function newMaintenanceItemId(): MaintenanceItemId {
+  return MaintenanceItemIdSchema.parse(generateId());
+}
+
 export type MaintenanceItemId = z.infer<typeof MaintenanceItemIdSchema>;
 export type MaintenanceItemType = z.infer<typeof MaintenanceItemTypeSchema>;
 export type MaintenanceItemInterval = z.infer<
