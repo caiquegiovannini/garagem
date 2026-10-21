@@ -3,6 +3,7 @@ import { VehicleIdSchema } from './vehicle';
 import { KmSchema } from './km';
 import { getMostRecent } from './time';
 import { SyncFieldsSchema } from './sync-fields';
+import { generateId } from '../../../shared/id';
 
 export const OdometerReadingIdSchema = z.uuid().brand<'OdometerReadingId'>();
 export const OdometerReadingSchema = z.object({
@@ -30,6 +31,10 @@ export function isKmConsistent(
 
 export function getCurrentKm(readings: ReadingPoint[]): number | undefined {
   return getMostRecent(readings)?.km;
+}
+
+export function newOdometerReadingId(): OdometerReadingId {
+  return OdometerReadingIdSchema.parse(generateId());
 }
 
 type ReadingPoint = Pick<OdometerReading, 'date' | 'km'>;
