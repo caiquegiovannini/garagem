@@ -5,6 +5,7 @@ import {
 } from './maintenance-item';
 import { KmSchema } from './km';
 import { SyncFieldsSchema } from './sync-fields';
+import { generateId } from '../../../shared/id';
 
 export const InspectionIdSchema = z.uuid().brand<'InspectionId'>();
 
@@ -29,6 +30,10 @@ export const InspectionSchema = z.discriminatedUnion('type', [
     type: z.literal(MaintenanceItemTypeSchema.enum.boolean),
   }),
 ]);
+
+export function newInspectionId(): InspectionId {
+  return InspectionIdSchema.parse(generateId());
+}
 
 export type InspectionId = z.infer<typeof InspectionIdSchema>;
 export type Inspection = z.infer<typeof InspectionSchema>;
