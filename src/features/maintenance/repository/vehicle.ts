@@ -1,6 +1,5 @@
-import { openDb } from '../../../infra/db/connection';
+import { db } from '../../../infra/db/connection';
 import { MAINTENANCE_ITEMS_SEED } from '../../../infra/db/seed';
-import { STORES } from '../../../infra/db/stores';
 import {
   newMaintenanceItemId,
   type MaintenanceItem,
@@ -8,41 +7,19 @@ import {
 import type { Vehicle } from '../domain/vehicle';
 
 export async function getVehicle(): Promise<Vehicle | undefined> {
-  const db = await openDb();
-
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(STORES.vehicle, 'readonly');
-    const request = transaction.objectStore(STORES.vehicle).getAll();
-
-    transaction.oncomplete = () => resolve(request.result[0]);
-    transaction.onerror = () => reject(transaction.error);
-  });
+  return db.vehicle.toCollection().first();
 }
 
 export async function createVehicle(vehicle: Vehicle): Promise<void> {
-  const db = await openDb();
-
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction(
-      [STORES.vehicle, STORES.maintenanceItem],
-      'readwrite',
-    );
-    transaction.objectStore(STORES.vehicle).put(vehicle);
-    const maintenanceItemStore = transaction.objectStore(
-      STORES.maintenanceItem,
-    );
-    for (const item of MAINTENANCE_ITEMS_SEED) {
-      const newItem: MaintenanceItem = {
-        id: newMaintenanceItemId(),
-        vehicleId: vehicle.id,
-        updatedAt: vehicle.updatedAt,
-        dirty: true,
-        ...item,
-      };
-      maintenanceItemStore.put(newItem);
-    }
-
-    transaction.oncomplete = () => resolve();
-    transaction.onerror = () => reject(transaction.error);
+  const items = MAINTENANCE_ITEMS_SEED.map((seed): MaintenanceItem => ({
+    ...seed,
+    id: newMaintenanceItemId(),
+    vehicleId: vehicle.id,
+    updatedAt: vehicle.updatedAt,
+    dirty: true,
+  }));
+  await db.transaction('rw', [db.vehicle, db.maintenanceItem], async () => {
+    await db.vehicle.put(vehicle);
+    await db.maintenanceItem.bulkPut(items);
   });
 }
