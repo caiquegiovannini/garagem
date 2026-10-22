@@ -23,6 +23,6 @@ Backend (fase 5): Cloudflare Workers + Hono + D1 + Drizzle.
 - Estrutura: domain/ plano, sem subpastas por tipo; src/domain/ só quando uma segunda feature precisar compartilhar entidades
 - Nenhuma dependência nova sem eu aprovar
 - Commits sempre em inglês, Conventional Commits (feat, fix, chore, style, refactor, test, docs, ci)
-- Antes de commitar: format:check, lint, typecheck e testes
+- Antes de commitar: rodar `npm run final-check` (formata, roda lint, typecheck e testes)
 - Todo código (arquivos, pastas, variáveis, funções, tipos) em inglês. Produto em português
 - Padrão de ID: z.uuid().brand<'XId'>(), no arquivo da própria entidade.
