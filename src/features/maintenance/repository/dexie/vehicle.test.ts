@@ -1,8 +1,9 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { db } from '../../../infra/db/connection';
-import { createVehicle, getVehicle } from './vehicle';
-import { newVehicleId, type Vehicle } from '../domain/vehicle';
+import { db } from '../../../../infra/db/connection';
+import { testVehicleRepositoryContract } from '../vehicle-repository.contract-test';
+import { createDexieVehicleRepository } from './vehicle';
+import { newVehicleId, type Vehicle } from '../../domain/vehicle';
 
 const vehicleUpdatedAt = new Date();
 const mareaTurbo: Vehicle = {
@@ -16,16 +17,12 @@ beforeEach(async () => {
   await Promise.all(db.tables.map((table) => table.clear()));
 });
 
-describe('createVehicle', () => {
-  it('should save the vehicle and return it', async () => {
-    await createVehicle(mareaTurbo);
-    const result = await getVehicle();
-
-    expect(result).toStrictEqual(mareaTurbo);
-  });
+describe('Dexie vehicle repository', () => {
+  testVehicleRepositoryContract(() => createDexieVehicleRepository());
 
   it('should create three maintenance items from the vehicle', async () => {
-    await createVehicle(mareaTurbo);
+    const repository = createDexieVehicleRepository();
+    await repository.create(mareaTurbo);
     const items = await db.maintenanceItem.toArray();
 
     expect(items).toHaveLength(3);
@@ -35,11 +32,5 @@ describe('createVehicle', () => {
         updatedAt: vehicleUpdatedAt,
       });
     }
-  });
-});
-
-describe('getVehicle', () => {
-  it('should return undefined when there is no vehicle', async () => {
-    expect(await getVehicle()).toBeUndefined();
   });
 });
