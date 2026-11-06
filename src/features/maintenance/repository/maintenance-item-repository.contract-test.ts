@@ -26,7 +26,6 @@ export function testMaintenanceItemRepositoryContract(
         id: newMaintenanceItemId(),
         vehicleId: vehicleId,
         updatedAt,
-        dirty: true,
       }));
       const repository = await makeRepository(items);
 

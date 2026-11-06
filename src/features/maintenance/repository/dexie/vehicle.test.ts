@@ -9,7 +9,6 @@ const vehicleUpdatedAt = new Date();
 const mareaTurbo: Vehicle = {
   id: newVehicleId(),
   name: 'Marea Turbo',
-  dirty: true,
   updatedAt: vehicleUpdatedAt,
 };
 

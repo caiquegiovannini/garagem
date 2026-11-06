@@ -14,7 +14,6 @@ const inspectionForItemA: Inspection = {
   km: 3000,
   result: 'ok',
   updatedAt: new Date(),
-  dirty: true,
 };
 const inspectionForItemB: Inspection = {
   id: newInspectionId(),
@@ -25,7 +24,6 @@ const inspectionForItemB: Inspection = {
   km: 3000,
   result: 'intervened',
   updatedAt: new Date(),
-  dirty: true,
 };
 
 export function testInspectionRepositoryContract(

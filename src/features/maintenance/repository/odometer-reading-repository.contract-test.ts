@@ -26,7 +26,6 @@ export function testOdometerReadingRepositoryContract(
           date: new Date('2026-06-01'),
           km: 32800,
           updatedAt: new Date('2026-06-01'),
-          dirty: true,
         },
         {
           id: newOdometerReadingId(),
@@ -34,7 +33,6 @@ export function testOdometerReadingRepositoryContract(
           date: new Date('2026-05-02'),
           km: 29550,
           updatedAt: new Date('2026-05-02'),
-          dirty: true,
         },
       ];
 

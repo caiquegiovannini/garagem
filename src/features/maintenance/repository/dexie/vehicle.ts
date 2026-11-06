@@ -14,7 +14,6 @@ export function createDexieVehicleRepository(): VehicleRepository {
         id: newMaintenanceItemId(),
         vehicleId: vehicle.id,
         updatedAt: vehicle.updatedAt,
-        dirty: true,
       }));
       await db.transaction('rw', [db.vehicle, db.maintenanceItem], async () => {
         await db.vehicle.put(vehicle);
