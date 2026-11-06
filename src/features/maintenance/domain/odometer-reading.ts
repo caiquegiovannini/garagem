@@ -5,7 +5,7 @@ import { getMostRecent } from './time';
 import { SyncFieldsSchema } from './sync-fields';
 import { generateId } from '../../../shared/id';
 
-export const OdometerReadingIdSchema = z.uuid().brand<'OdometerReadingId'>();
+export const OdometerReadingIdSchema = z.uuidv7().brand<'OdometerReadingId'>();
 export const OdometerReadingSchema = z.object({
   id: OdometerReadingIdSchema,
   vehicleId: VehicleIdSchema,

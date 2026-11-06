@@ -7,7 +7,7 @@ import { KmSchema } from './km';
 import { SyncFieldsSchema } from './sync-fields';
 import { generateId } from '../../../shared/id';
 
-export const InspectionIdSchema = z.uuid().brand<'InspectionId'>();
+export const InspectionIdSchema = z.uuidv7().brand<'InspectionId'>();
 
 const InspectionBaseSchema = z.object({
   id: InspectionIdSchema,
