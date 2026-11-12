@@ -6,6 +6,7 @@ import {
 } from '../domain/odometer-reading';
 import { newVehicleId } from '../domain/vehicle';
 import type { OutboxRepository } from './outbox-repository';
+import type { OutboxEntry } from '../domain/outbox';
 
 export function testOdometerReadingRepositoryContract(
   makeRepositories: () => {
@@ -47,6 +48,30 @@ export function testOdometerReadingRepositoryContract(
 
       expect(results).toHaveLength(odometerReadings.length);
       expect(results).toStrictEqual(expect.arrayContaining(odometerReadings));
+    });
+
+    it('should create an outbox entry when saving a reading', async () => {
+      const { odometerReading, outbox } = makeRepositories();
+      const reading: OdometerReading = {
+        id: newOdometerReadingId(),
+        vehicleId: newVehicleId(),
+        date: new Date('2026-06-01'),
+        km: 32800,
+        updatedAt: new Date('2026-06-01'),
+      };
+      const entry: OutboxEntry = {
+        mutationId: expect.any(String),
+        operation: 'create',
+        entity: 'odometerReading',
+        entityId: reading.id,
+        payload: reading,
+      };
+
+      await odometerReading.save(reading);
+
+      const result = await outbox.list();
+
+      expect(result).toStrictEqual([entry]);
     });
   });
 }
