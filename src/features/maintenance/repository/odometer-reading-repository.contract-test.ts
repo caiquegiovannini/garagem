@@ -5,20 +5,24 @@ import {
   type OdometerReading,
 } from '../domain/odometer-reading';
 import { newVehicleId } from '../domain/vehicle';
+import type { OutboxRepository } from './outbox-repository';
 
 export function testOdometerReadingRepositoryContract(
-  makeRepository: () => OdometerReadingRepository,
+  makeRepositories: () => {
+    odometerReading: OdometerReadingRepository;
+    outbox: OutboxRepository;
+  },
 ) {
   describe('getAll', () => {
     it('should return an empty array when there is no reading in the store', async () => {
-      const repository = makeRepository();
-      expect(await repository.getAll()).toHaveLength(0);
+      const { odometerReading } = makeRepositories();
+      expect(await odometerReading.getAll()).toHaveLength(0);
     });
   });
 
   describe('save', () => {
     it('should save the readings', async () => {
-      const repository = makeRepository();
+      const { odometerReading } = makeRepositories();
       const odometerReadings: OdometerReading[] = [
         {
           id: newOdometerReadingId(),
@@ -37,9 +41,9 @@ export function testOdometerReadingRepositoryContract(
       ];
 
       for (const reading of odometerReadings) {
-        await repository.save(reading);
+        await odometerReading.save(reading);
       }
-      const results = await repository.getAll();
+      const results = await odometerReading.getAll();
 
       expect(results).toHaveLength(odometerReadings.length);
       expect(results).toStrictEqual(expect.arrayContaining(odometerReadings));
