@@ -1,7 +1,10 @@
 import type { Inspection } from '../../domain/inspection';
+import type { OutboxEntry } from '../../domain/outbox';
 import type { InspectionRepository } from '../inspection-repository';
 
-export function createInMemoryInspectionRepository(): InspectionRepository {
+export function createInMemoryInspectionRepository(
+  entries: OutboxEntry[],
+): InspectionRepository {
   const inspections: Inspection[] = [];
 
   return {
