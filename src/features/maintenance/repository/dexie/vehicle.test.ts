@@ -4,6 +4,8 @@ import { db } from '../../../../infra/db/connection';
 import { testVehicleRepositoryContract } from '../vehicle-repository.contract-test';
 import { createDexieVehicleRepository } from './vehicle';
 import { newVehicleId, type Vehicle } from '../../domain/vehicle';
+import { createDexieMaintenanceItemRepository } from './maintenance-item';
+import { createDexieOutboxRepository } from './outbox';
 
 const vehicleUpdatedAt = new Date();
 const mareaTurbo: Vehicle = {
@@ -17,7 +19,13 @@ beforeEach(async () => {
 });
 
 describe('Dexie vehicle repository', () => {
-  testVehicleRepositoryContract(() => createDexieVehicleRepository());
+  testVehicleRepositoryContract(() => {
+    return {
+      vehicle: createDexieVehicleRepository(),
+      maintenanceItems: createDexieMaintenanceItemRepository(),
+      outbox: createDexieOutboxRepository(),
+    };
+  });
 
   it('should create three maintenance items from the vehicle', async () => {
     const repository = createDexieVehicleRepository();

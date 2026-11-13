@@ -1,15 +1,20 @@
+import type { MaintenanceItem } from '../../domain/maintenance-item';
+import type { OutboxEntry } from '../../domain/outbox';
 import type { Vehicle } from '../../domain/vehicle';
 import type { VehicleRepository } from '../vehicle-repository';
 
-export function createInMemoryVehicleRepository(): VehicleRepository {
-  let vehicleCreated: Vehicle | undefined;
+export function createInMemoryVehicleRepository(
+  maintenanceItems: MaintenanceItem[],
+  entries: OutboxEntry[],
+): VehicleRepository {
+  let storedVehicle: Vehicle | undefined;
 
   return {
     async create(vehicle) {
-      vehicleCreated = vehicle;
+      storedVehicle = vehicle;
     },
     async get() {
-      return vehicleCreated;
+      return storedVehicle;
     },
   };
 }
