@@ -1,6 +1,5 @@
 import {
-  MAINTENANCE_ITEMS_SEED,
-  newMaintenanceItemId,
+  createSeedMaintenanceItems,
   type MaintenanceItem,
 } from '../../domain/maintenance-item';
 import { createOutboxEntry, type OutboxEntry } from '../../domain/outbox';
@@ -15,12 +14,7 @@ export function createInMemoryVehicleRepository(
 
   return {
     async create(vehicle) {
-      const items = MAINTENANCE_ITEMS_SEED.map((seed): MaintenanceItem => ({
-        ...seed,
-        id: newMaintenanceItemId(),
-        vehicleId: vehicle.id,
-        updatedAt: vehicle.updatedAt,
-      }));
+      const items = createSeedMaintenanceItems(vehicle);
       const outboxVehicleEntry = createOutboxEntry('vehicle', vehicle);
       const outboxItemsEntries: OutboxEntry[] = items.map((item) =>
         createOutboxEntry('maintenanceItem', item),

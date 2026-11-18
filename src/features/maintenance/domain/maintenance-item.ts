@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { VehicleIdSchema } from './vehicle';
+import { VehicleIdSchema, type Vehicle } from './vehicle';
 import { generateId } from '../../../shared/id';
 import { SyncFieldsSchema } from './sync-fields';
 
@@ -27,6 +27,24 @@ export function newMaintenanceItemId(): MaintenanceItemId {
   return MaintenanceItemIdSchema.parse(generateId());
 }
 
+export function createSeedMaintenanceItems(
+  vehicle: Pick<Vehicle, 'id' | 'updatedAt'>,
+) {
+  return MAINTENANCE_ITEMS_SEED.map((seed): MaintenanceItem => ({
+    ...seed,
+    id: newMaintenanceItemId(),
+    vehicleId: vehicle.id,
+    updatedAt: vehicle.updatedAt,
+  }));
+}
+
+export type MaintenanceItemId = z.infer<typeof MaintenanceItemIdSchema>;
+export type MaintenanceItemType = z.infer<typeof MaintenanceItemTypeSchema>;
+export type MaintenanceItemInterval = z.infer<
+  typeof MaintenanceItemIntervalSchema
+>;
+export type MaintenanceItem = z.infer<typeof MaintenanceItemSchema>;
+
 export const MAINTENANCE_ITEMS_SEED: Omit<
   MaintenanceItem,
   'id' | 'vehicleId' | 'updatedAt' | 'deletedAt' | 'dirty'
@@ -47,10 +65,3 @@ export const MAINTENANCE_ITEMS_SEED: Omit<
     interval: { days: 30, km: 1000 },
   },
 ];
-
-export type MaintenanceItemId = z.infer<typeof MaintenanceItemIdSchema>;
-export type MaintenanceItemType = z.infer<typeof MaintenanceItemTypeSchema>;
-export type MaintenanceItemInterval = z.infer<
-  typeof MaintenanceItemIntervalSchema
->;
-export type MaintenanceItem = z.infer<typeof MaintenanceItemSchema>;
