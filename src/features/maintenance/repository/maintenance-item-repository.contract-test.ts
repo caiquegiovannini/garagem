@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
+  MAINTENANCE_ITEMS_SEED,
   newMaintenanceItemId,
   type MaintenanceItem,
 } from '../domain/maintenance-item';
 import type { MaintenanceItemRepository } from './maintenance-item-repository';
 import { newVehicleId } from '../domain/vehicle';
-import { MAINTENANCE_ITEMS_SEED } from '../../../infra/db/seed';
 
 export function testMaintenanceItemRepositoryContract(
   makeRepository: (

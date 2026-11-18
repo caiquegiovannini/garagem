@@ -1,5 +1,5 @@
-import { MAINTENANCE_ITEMS_SEED } from '../../../../infra/db/seed';
 import {
+  MAINTENANCE_ITEMS_SEED,
   newMaintenanceItemId,
   type MaintenanceItem,
 } from '../../domain/maintenance-item';

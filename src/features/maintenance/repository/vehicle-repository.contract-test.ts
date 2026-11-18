@@ -3,8 +3,8 @@ import type { VehicleRepository } from './vehicle-repository';
 import { newVehicleId, type Vehicle } from '../domain/vehicle';
 import type { MaintenanceItemRepository } from './maintenance-item-repository';
 import type { OutboxRepository } from './outbox-repository';
-import { MAINTENANCE_ITEMS_SEED } from '../../../infra/db/seed';
 import type { OutboxEntry } from '../domain/outbox';
+import { MAINTENANCE_ITEMS_SEED } from '../domain/maintenance-item';
 
 const vehicleUpdatedAt = new Date();
 const mareaTurbo: Vehicle = {
