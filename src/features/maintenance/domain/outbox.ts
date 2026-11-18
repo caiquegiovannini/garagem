@@ -49,5 +49,18 @@ export function newMutationId(): MutationId {
   return MutationIdSchema.parse(generateId());
 }
 
+export function createOutboxEntry<E extends OutboxEntry['entity']>(
+  entity: E,
+  payload: Extract<OutboxEntry, { entity: E }>['payload'],
+): Extract<OutboxEntry, { entity: E }> {
+  return {
+    mutationId: newMutationId(),
+    operation: 'create',
+    entity,
+    entityId: payload.id,
+    payload,
+  } as Extract<OutboxEntry, { entity: E }>;
+}
+
 export type MutationId = z.infer<typeof MutationIdSchema>;
 export type OutboxEntry = z.infer<typeof OutboxEntrySchema>;

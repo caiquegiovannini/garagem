@@ -1,5 +1,5 @@
 import type { Inspection } from '../../domain/inspection';
-import { newMutationId, type OutboxEntry } from '../../domain/outbox';
+import { createOutboxEntry, type OutboxEntry } from '../../domain/outbox';
 import type { InspectionRepository } from '../inspection-repository';
 
 export function createInMemoryInspectionRepository(
@@ -9,13 +9,7 @@ export function createInMemoryInspectionRepository(
 
   return {
     async save(inspection) {
-      const outboxEntry: OutboxEntry = {
-        mutationId: newMutationId(),
-        operation: 'create',
-        entity: 'inspection',
-        entityId: inspection.id,
-        payload: inspection,
-      };
+      const outboxEntry = createOutboxEntry('inspection', inspection);
 
       inspections.push(inspection);
       entries.push(outboxEntry);

@@ -4,7 +4,7 @@ import {
   newMaintenanceItemId,
   type MaintenanceItem,
 } from '../../domain/maintenance-item';
-import { newMutationId, type OutboxEntry } from '../../domain/outbox';
+import { createOutboxEntry, type OutboxEntry } from '../../domain/outbox';
 import type { VehicleRepository } from '../vehicle-repository';
 
 export function createDexieVehicleRepository(): VehicleRepository {
@@ -16,20 +16,10 @@ export function createDexieVehicleRepository(): VehicleRepository {
         vehicleId: vehicle.id,
         updatedAt: vehicle.updatedAt,
       }));
-      const outboxVehicleEntry: OutboxEntry = {
-        mutationId: newMutationId(),
-        operation: 'create',
-        entity: 'vehicle',
-        entityId: vehicle.id,
-        payload: vehicle,
-      };
-      const outboxItemsEntries: OutboxEntry[] = items.map((item) => ({
-        mutationId: newMutationId(),
-        operation: 'create',
-        entity: 'maintenanceItem',
-        entityId: item.id,
-        payload: item,
-      }));
+      const outboxVehicleEntry = createOutboxEntry('vehicle', vehicle);
+      const outboxItemsEntries: OutboxEntry[] = items.map((item) =>
+        createOutboxEntry('maintenanceItem', item),
+      );
 
       await db.transaction(
         'rw',

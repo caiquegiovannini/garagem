@@ -1,5 +1,5 @@
 import type { OdometerReading } from '../../domain/odometer-reading';
-import { newMutationId, type OutboxEntry } from '../../domain/outbox';
+import { createOutboxEntry, type OutboxEntry } from '../../domain/outbox';
 import type { OdometerReadingRepository } from '../odometer-reading-repository';
 
 export function createInMemoryOdometerReadingRepository(
@@ -9,13 +9,7 @@ export function createInMemoryOdometerReadingRepository(
 
   return {
     async save(reading) {
-      const outboxEntry: OutboxEntry = {
-        mutationId: newMutationId(),
-        operation: 'create',
-        entity: 'odometerReading',
-        entityId: reading.id,
-        payload: reading,
-      };
+      const outboxEntry = createOutboxEntry('odometerReading', reading);
 
       readings.push(reading);
       entries.push(outboxEntry);

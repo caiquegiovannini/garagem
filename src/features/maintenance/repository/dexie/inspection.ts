@@ -1,17 +1,11 @@
 import { db } from '../../../../infra/db/connection';
-import { newMutationId, type OutboxEntry } from '../../domain/outbox';
+import { createOutboxEntry } from '../../domain/outbox';
 import type { InspectionRepository } from '../inspection-repository';
 
 export function createDexieInspectionRepository(): InspectionRepository {
   return {
     async save(inspection) {
-      const outboxEntry: OutboxEntry = {
-        mutationId: newMutationId(),
-        operation: 'create',
-        entity: 'inspection',
-        entityId: inspection.id,
-        payload: inspection,
-      };
+      const outboxEntry = createOutboxEntry('inspection', inspection);
 
       await db.transaction('rw', [db.inspection, db.outbox], async () => {
         await db.inspection.put(inspection);
