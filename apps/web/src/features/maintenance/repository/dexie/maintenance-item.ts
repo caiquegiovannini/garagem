@@ -1,5 +1,5 @@
 import { db } from '../../../../infra/db/connection';
-import type { MaintenanceItemRepository } from '../maintenance-item-repository';
+import type { MaintenanceItemRepository } from '@garagem/core';
 
 export function createDexieMaintenanceItemRepository(): MaintenanceItemRepository {
   return {

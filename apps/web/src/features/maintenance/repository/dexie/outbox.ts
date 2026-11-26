@@ -1,5 +1,5 @@
 import { db } from '../../../../infra/db/connection';
-import type { OutboxRepository } from '../outbox-repository';
+import type { OutboxRepository } from '@garagem/core';
 
 export function createDexieOutboxRepository(): OutboxRepository {
   return {

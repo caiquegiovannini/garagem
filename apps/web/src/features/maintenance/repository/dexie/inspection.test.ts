@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe } from 'vitest';
 import { db } from '../../../../infra/db/connection';
-import { testInspectionRepositoryContract } from '../inspection-repository.contract-test';
+import { testInspectionRepositoryContract } from '@garagem/core/testing';
 import { createDexieInspectionRepository } from './inspection';
 import { createDexieOutboxRepository } from './outbox';
 

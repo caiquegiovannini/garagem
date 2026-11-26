@@ -1,7 +1,6 @@
 import { db } from '../../../../infra/db/connection';
-import { createSeedMaintenanceItems } from '../../domain/maintenance-item';
-import { createOutboxEntry, type OutboxEntry } from '../../domain/outbox';
-import type { VehicleRepository } from '../vehicle-repository';
+import { createSeedMaintenanceItems, createOutboxEntry } from '@garagem/core';
+import type { OutboxEntry, VehicleRepository } from '@garagem/core';
 
 export function createDexieVehicleRepository(): VehicleRepository {
   return {

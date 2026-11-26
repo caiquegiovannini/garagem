@@ -1,9 +1,11 @@
 import Dexie, { type EntityTable } from 'dexie';
-import type { Inspection } from '../../features/maintenance/domain/inspection';
-import type { Vehicle } from '../../features/maintenance/domain/vehicle';
-import type { OdometerReading } from '../../features/maintenance/domain/odometer-reading';
-import type { MaintenanceItem } from '../../features/maintenance/domain/maintenance-item';
-import type { OutboxEntry } from '../../features/maintenance/domain/outbox';
+import type {
+  Inspection,
+  Vehicle,
+  OdometerReading,
+  MaintenanceItem,
+  OutboxEntry,
+} from '@garagem/core';
 
 export const db = new Dexie('car-maintenance') as Dexie & {
   vehicle: EntityTable<Vehicle, 'id'>;

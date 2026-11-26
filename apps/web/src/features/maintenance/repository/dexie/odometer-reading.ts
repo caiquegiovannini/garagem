@@ -1,6 +1,6 @@
 import { db } from '../../../../infra/db/connection';
-import { createOutboxEntry } from '../../domain/outbox';
-import type { OdometerReadingRepository } from '../odometer-reading-repository';
+import { createOutboxEntry } from '@garagem/core';
+import type { OdometerReadingRepository } from '@garagem/core';
 
 export function createDexieOdometerReadingRepository(): OdometerReadingRepository {
   return {

@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe } from 'vitest';
 import { db } from '../../../../infra/db/connection';
-import { testOutboxRepositoryContract } from '../outbox-repository.contract-test';
+import { testOutboxRepositoryContract } from '@garagem/core/testing';
 import { createDexieOutboxRepository } from './outbox';
 
 beforeEach(async () => {

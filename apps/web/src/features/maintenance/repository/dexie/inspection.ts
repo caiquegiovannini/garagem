@@ -1,6 +1,6 @@
 import { db } from '../../../../infra/db/connection';
-import { createOutboxEntry } from '../../domain/outbox';
-import type { InspectionRepository } from '../inspection-repository';
+import { createOutboxEntry } from '@garagem/core';
+import type { InspectionRepository } from '@garagem/core';
 
 export function createDexieInspectionRepository(): InspectionRepository {
   return {

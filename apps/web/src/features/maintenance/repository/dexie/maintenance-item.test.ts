@@ -1,6 +1,6 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe } from 'vitest';
-import { testMaintenanceItemRepositoryContract } from '../maintenance-item-repository.contract-test';
+import { testMaintenanceItemRepositoryContract } from '@garagem/core/testing';
 import { createDexieMaintenanceItemRepository } from './maintenance-item';
 import { db } from '../../../../infra/db/connection';
 
